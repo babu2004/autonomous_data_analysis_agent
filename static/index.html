@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Autonomous Data Analyst</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #1f2937;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .header {
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            margin-bottom: 8px;
+            font-size: 32px;
+        }
+
+        .header p {
+            color: #6b7280;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        input[type="file"],
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 15px;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: #111827;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #374151;
+        }
+
+        button:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .status {
+            padding: 12px;
+            border-radius: 8px;
+            background: #f3f4f6;
+            margin-bottom: 20px;
+        }
+
+        .step {
+            border-left: 4px solid #111827;
+            padding: 14px 16px;
+            margin-bottom: 12px;
+            background: #f9fafb;
+            border-radius: 6px;
+        }
+
+        .step-title {
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        .observation {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .final-answer {
+            background: #f9fafb;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .error {
+            color: #b91c1c;
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            padding: 12px;
+            border-radius: 8px;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size: 13px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <h1> Autonomous Data Analyst</h1>
+        <p>
+            An agentic AI system that analyzes CSV datasets using
+            LLM reasoning and native tool calling.
+        </p>
+    </div>
+
+    <!-- Input -->
+    <div class="card">
+
+        <label for="file">Upload CSV Dataset</label>
+
+        <input
+            type="file"
+            id="file"
+            accept=".csv"
+        >
+
+        <label for="goal">Analysis Goal</label>
+
+        <textarea
+            id="goal"
+            placeholder="Example: Analyze this sales dataset and tell me which region generated the highest revenue."
+        ></textarea>
+
+        <button id="analyzeBtn" onclick="analyzeDataset()">
+            Analyze Dataset
+        </button>
+
+    </div>
+
+    <!-- Status -->
+    <div id="statusCard" class="card hidden">
+
+        <div class="status" id="status">
+            Preparing analysis...
+        </div>
+
+        <div id="steps"></div>
+
+    </div>
+
+    <!-- Final Answer -->
+    <div id="resultCard" class="card hidden">
+
+        <h2>Final Answer</h2>
+
+        <div
+            id="finalAnswer"
+            class="final-answer"
+        ></div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+async function analyzeDataset() {
+
+    const fileInput = document.getElementById("file");
+    const goalInput = document.getElementById("goal");
+
+    const button = document.getElementById("analyzeBtn");
+
+    const statusCard = document.getElementById("statusCard");
+    const resultCard = document.getElementById("resultCard");
+
+    const status = document.getElementById("status");
+    const stepsContainer = document.getElementById("steps");
+    const finalAnswer = document.getElementById("finalAnswer");
+
+    if (!fileInput.files.length) {
+        alert("Please select a CSV file.");
+        return;
+    }
+
+    if (!goalInput.value.trim()) {
+        alert("Please enter an analysis goal.");
+        return;
+    }
+
+    button.disabled = true;
+    button.textContent = "Analyzing...";
+
+    statusCard.classList.remove("hidden");
+    resultCard.classList.add("hidden");
+
+    stepsContainer.innerHTML = "";
+    finalAnswer.innerHTML = "";
+
+    status.textContent = "🤖 Agent is analyzing the dataset...";
+
+    const formData = new FormData();
+
+    formData.append(
+        "file",
+        fileInput.files[0]
+    );
+
+    formData.append(
+        "goal",
+        goalInput.value
+    );
+
+    try {
+
+        const response = await fetch(
+            "/analyze",
+            {
+                method: "POST",
+                body: formData
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok || data.error) {
+            throw new Error(
+                data.error || "Analysis failed."
+            );
+        }
+
+        status.textContent =
+            `✅ Analysis completed in ${data.steps} agent steps.`;
+
+        renderSteps(data);
+
+        finalAnswer.innerHTML =
+            formatAnswer(data.final_answer);
+
+        resultCard.classList.remove("hidden");
+
+    } catch (error) {
+
+        status.textContent = "❌ Analysis failed.";
+
+        stepsContainer.innerHTML = `
+            <div class="error">
+                ${error.message}
+            </div>
+        `;
+
+    } finally {
+
+        button.disabled = false;
+        button.textContent = "Analyze Dataset";
+    }
+}
+
+
+function renderSteps(data) {
+
+    const container =
+        document.getElementById("steps");
+
+    data.tool_calls.forEach(
+        (toolCall, index) => {
+
+            const observation =
+                data.observations[index];
+
+            const step = document.createElement("div");
+
+            step.className = "step";
+
+            step.innerHTML = `
+                <div class="step-title">
+                    Step ${toolCall.step} → ${toolCall.tool}
+                </div>
+
+                <div class="observation">
+                    Tool executed successfully.
+                </div>
+
+                <pre>
+${JSON.stringify(
+    observation?.data || {},
+    null,
+    2
+)}
+                </pre>
+            `;
+
+            container.appendChild(step);
+        }
+    );
+}
+
+
+function formatAnswer(answer) {
+
+    if (!answer) {
+        return "No final answer was generated.";
+    }
+
+    return answer
+        .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+        .replace(/\n/g, "<br>");
+}
+
+</script>
+
+</body>
+</html>

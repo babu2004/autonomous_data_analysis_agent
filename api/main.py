@@ -2,6 +2,7 @@ from pathlib import Path
 from tempfile import NamedTemporaryFile
 
 from fastapi import FastAPI, File, Form, UploadFile
+from fastapi.responses import FileResponse
 
 from agent.agent import Agent
 from llm.grok_provider import GrokProvider
@@ -21,7 +22,10 @@ def root():
     return {
         "message": "Autonomous Data Analysis Agent API is running."
     }
-
+    
+@app.get("/app")
+def app_page():
+    return FileResponse("static/index.html")
 
 @app.post("/analyze")
 async def analyze(
@@ -78,4 +82,4 @@ async def analyze(
         }
 
     finally:
-        Path(file_path).unlink(missing_ok=True)
+        Path(file_path).unlink(missing_ok=True)  
