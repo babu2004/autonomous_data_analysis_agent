@@ -18,12 +18,7 @@ agent = Agent(llm=llm)
 
 
 @app.get("/")
-def root():
-    return {
-        "message": "Autonomous Data Analysis Agent API is running."
-    }
-    
-@app.get("/app")
+
 def app_page():
     return FileResponse("static/index.html")
 
