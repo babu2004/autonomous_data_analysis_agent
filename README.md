@@ -55,53 +55,11 @@ The application exposes this workflow through a simple web interface powered by 
 
 ## Architecture
 
-```text
-                         User
-                           │
-                           ▼
-                  ┌─────────────────┐
-                  │  Web Frontend   │
-                  └────────┬────────┘
-                           │
-                           ▼
-                  ┌─────────────────┐
-                  │     FastAPI     │
-                  └────────┬────────┘
-                           │
-                           ▼
-                  ┌─────────────────┐
-                  │  Agent Runner   │
-                  └────────┬────────┘
-                           │
-                           ▼
-                  ┌─────────────────┐
-                  │   LLM Provider  │
-                  └────────┬────────┘
-                           │
-                    Native Tool Call
-                           │
-                           ▼
-                  ┌─────────────────┐
-                  │ Tool Executor   │
-                  └────────┬────────┘
-                           │
-                    Tool Registry
-                           │
-          ┌────────────────┼────────────────┐
-          ▼                ▼                ▼
-   inspect_dataset  dataset_statistics  group_analysis
-          │                │                │
-          └────────────────┼────────────────┘
-                           │
-                           ▼
-                    Tool Observation
-                           │
-                           ▼
-                         Agent
-                           │
-                           ▼
-                     Final Answer
-```
+
+
+<img width="1536" height="1024" alt="ChatGPT Image Sep 27, 2026, 07_12_47 PM" src="https://github.com/user-attachments/assets/c4e2149b-211a-4941-a057-77ce1cdf02eb" />
+
+
 
 ---
 
