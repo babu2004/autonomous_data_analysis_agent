@@ -1,0 +1,7 @@
+date,region,product,quantity,price,revenue
+2026-09-01,North,Laptop,2,50000,100000
+2026-09-01,South,Phone,5,20000,100000
+2026-09-02,West,Laptop,4,50000,200000
+2026-09-02,East,Tablet,3,30000,90000
+2026-09-03,West,Phone,10,20000,200000
+2026-09-03,South,Laptop,3,50000,150000

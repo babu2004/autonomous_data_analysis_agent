@@ -7,6 +7,7 @@ class ToolCall(BaseModel):
     step: int
     tool: str
     arguments: dict[str, Any] = Field(default_factory=dict)
+    call_id: str | None = None
 
 
 class ToolResult(BaseModel):
