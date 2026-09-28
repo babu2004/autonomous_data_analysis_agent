@@ -10,6 +10,7 @@ from tools.executor import execute_tool
 
 
 MAX_STEPS = 5
+MAX_TOOL_RESULT_CHARS = 12000
 
 
 SYSTEM_PROMPT = """
@@ -28,6 +29,10 @@ You should:
 
 Use tools when they are necessary.
 Do not invent tool results.
+
+Only make claims supported by tool observations.
+Do not invent calculations, correlations, or findings that were not computed by a tool.
+If the available tools cannot answer the user's goal, explain what is missing rather than guessing.
 """
 
 
@@ -127,6 +132,12 @@ class Agent:
                             result.data,
                             default=str,
                         )
+
+                        if len(tool_content) > MAX_TOOL_RESULT_CHARS:
+                            tool_content = (
+                                tool_content[:MAX_TOOL_RESULT_CHARS]
+                                + "\n[Tool result truncated for LLM context safety.]"
+                            )
 
                     else:
 

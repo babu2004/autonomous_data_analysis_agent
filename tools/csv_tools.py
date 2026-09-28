@@ -129,16 +129,27 @@ def group_analysis(
             .sort_values(ascending=False)
         )
 
-        result = grouped.to_dict()
+        # Keep the LLM context small while preserving
+        # the complete calculation in Python.
+        TOP_N = 5
+
+        top_groups = grouped.head(TOP_N)
+
+        result = {
+            "group_by": group_by,
+            "metric": metric,
+            "aggregation": "sum",
+            "total_groups": len(grouped),
+            "top_groups": top_groups.to_dict(),
+        }
+
+        if not grouped.empty:
+            result["highest_group"] = str(grouped.index[0])
+            result["highest_value"] = grouped.iloc[0]
 
         return ToolResult(
             success=True,
-            data={
-                "group_by": group_by,
-                "metric": metric,
-                "aggregation": "sum",
-                "results": result,
-            },
+            data=result,
         )
 
     except Exception as exc:

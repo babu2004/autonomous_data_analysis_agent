@@ -1,0 +1,401 @@
+* {
+  box-sizing: border-box;
+  }
+
+body {
+margin: 0;
+font-family: Arial, sans-serif;
+background: #f5f7fb;
+color: #1f2937;
+}
+
+.container {
+max-width: 1000px;
+margin: 40px auto;
+padding: 20px;
+}
+
+/* -----------------------------------
+Header
+----------------------------------- */
+
+.header {
+margin-bottom: 30px;
+}
+
+.header h1 {
+margin: 0 0 8px;
+font-size: 32px;
+}
+
+.header p {
+margin: 0;
+color: #6b7280;
+line-height: 1.6;
+}
+
+/* -----------------------------------
+Cards
+----------------------------------- */
+
+.card {
+background: white;
+border: 1px solid #e5e7eb;
+border-radius: 12px;
+padding: 24px;
+margin-bottom: 20px;
+}
+
+/* -----------------------------------
+Form
+----------------------------------- */
+
+label {
+display: block;
+font-weight: bold;
+margin-bottom: 8px;
+}
+
+input[type="file"],
+textarea {
+width: 100%;
+padding: 12px;
+border: 1px solid #d1d5db;
+border-radius: 8px;
+margin-bottom: 20px;
+font-size: 15px;
+font-family: inherit;
+}
+
+input[type="file"] {
+background: white;
+}
+
+textarea {
+min-height: 100px;
+resize: vertical;
+line-height: 1.5;
+}
+
+input[type="file"]:focus,
+textarea:focus {
+outline: none;
+border-color: #6b7280;
+}
+
+/* -----------------------------------
+Button
+----------------------------------- */
+
+button {
+width: 100%;
+padding: 14px;
+border: none;
+border-radius: 8px;
+background: #111827;
+color: white;
+font-size: 16px;
+font-weight: bold;
+cursor: pointer;
+transition: background 0.2s ease;
+}
+
+button:hover {
+background: #374151;
+}
+
+button:disabled {
+background: #9ca3af;
+cursor: not-allowed;
+}
+
+/* -----------------------------------
+Utility
+----------------------------------- */
+
+.hidden {
+display: none;
+}
+
+/* -----------------------------------
+Status
+----------------------------------- */
+
+.status {
+padding: 12px;
+border-radius: 8px;
+background: #f3f4f6;
+margin-bottom: 20px;
+line-height: 1.5;
+}
+
+/* -----------------------------------
+Agent Steps
+----------------------------------- */
+
+.step {
+border: 1px solid #e5e7eb;
+border-left: 4px solid #111827;
+padding: 18px;
+margin-bottom: 14px;
+background: #f9fafb;
+border-radius: 8px;
+}
+
+.step-header {
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 12px;
+margin-bottom: 14px;
+}
+
+.step-title {
+font-weight: bold;
+font-size: 15px;
+}
+
+.success-badge {
+font-size: 12px;
+font-weight: bold;
+padding: 5px 9px;
+border-radius: 999px;
+background: #dcfce7;
+color: #166534;
+white-space: nowrap;
+}
+
+.tool-description {
+color: #6b7280;
+font-size: 14px;
+margin-bottom: 14px;
+}
+
+/* -----------------------------------
+Tool Result Summary
+----------------------------------- */
+
+.result-summary {
+background: white;
+border: 1px solid #e5e7eb;
+border-radius: 8px;
+padding: 16px;
+margin-bottom: 12px;
+}
+
+.summary-grid {
+display: grid;
+grid-template-columns: repeat(
+auto-fit,
+minmax(160px, 1fr)
+);
+gap: 12px;
+}
+
+.summary-item {
+background: #f9fafb;
+border-radius: 8px;
+padding: 12px;
+}
+
+.summary-label {
+font-size: 12px;
+color: #6b7280;
+margin-bottom: 4px;
+}
+
+.summary-value {
+font-size: 18px;
+font-weight: bold;
+word-break: break-word;
+}
+
+/* -----------------------------------
+Tables
+----------------------------------- */
+
+.data-table {
+width: 100%;
+border-collapse: collapse;
+margin-top: 10px;
+font-size: 14px;
+}
+
+.data-table th,
+.data-table td {
+text-align: left;
+padding: 10px 12px;
+border-bottom: 1px solid #e5e7eb;
+}
+
+.data-table th {
+background: #f3f4f6;
+font-weight: bold;
+}
+
+.data-table tr:last-child td {
+border-bottom: none;
+}
+
+/* -----------------------------------
+Column Tags
+----------------------------------- */
+
+.column-tag {
+display: inline-block;
+background: #f3f4f6;
+border: 1px solid #e5e7eb;
+border-radius: 5px;
+padding: 4px 7px;
+margin: 3px;
+font-size: 12px;
+}
+
+/* -----------------------------------
+Raw JSON
+----------------------------------- */
+
+details {
+margin-top: 12px;
+}
+
+details summary {
+cursor: pointer;
+color: #4b5563;
+font-size: 13px;
+font-weight: bold;
+user-select: none;
+}
+
+details summary:hover {
+color: #111827;
+}
+
+.json-output {
+background: #111827;
+color: #e5e7eb;
+padding: 14px;
+border-radius: 8px;
+margin-top: 10px;
+overflow-x: auto;
+white-space: pre-wrap;
+word-break: break-word;
+font-size: 12px;
+line-height: 1.5;
+}
+
+/* -----------------------------------
+Empty Result
+----------------------------------- */
+
+.empty-result {
+color: #6b7280;
+font-size: 14px;
+padding: 10px 0;
+}
+
+/* -----------------------------------
+Final Answer
+----------------------------------- */
+
+.final-answer {
+background: #f9fafb;
+border: 1px solid #d1d5db;
+border-radius: 8px;
+padding: 24px;
+line-height: 1.7;
+}
+
+.final-answer h1,
+.final-answer h2,
+.final-answer h3 {
+margin-top: 0;
+}
+
+.final-answer p {
+margin: 10px 0;
+}
+
+.final-answer ul,
+.final-answer ol {
+padding-left: 24px;
+}
+
+.final-answer li {
+margin-bottom: 6px;
+}
+
+.final-answer table {
+width: 100%;
+border-collapse: collapse;
+margin: 16px 0;
+}
+
+.final-answer th,
+.final-answer td {
+border: 1px solid #d1d5db;
+padding: 10px;
+text-align: left;
+}
+
+.final-answer th {
+background: #f3f4f6;
+}
+
+.final-answer code {
+background: #e5e7eb;
+padding: 2px 5px;
+border-radius: 4px;
+font-size: 13px;
+}
+
+/* -----------------------------------
+Error
+----------------------------------- */
+
+.error {
+color: #b91c1c;
+background: #fef2f2;
+border: 1px solid #fecaca;
+padding: 12px;
+border-radius: 8px;
+line-height: 1.5;
+}
+
+/* -----------------------------------
+Responsive Design
+----------------------------------- */
+
+@media (max-width: 700px) {
+
+
+.container {
+    margin: 20px auto;
+    padding: 14px;
+}
+
+.card {
+    padding: 18px;
+}
+
+.header h1 {
+    font-size: 26px;
+}
+
+.step-header {
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.data-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.final-answer {
+    padding: 18px;
+}
+
+
+}
