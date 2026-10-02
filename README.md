@@ -57,7 +57,8 @@ The application exposes this workflow through a simple web interface powered by 
 
 
 
-<img width="1536" height="1024" alt="ChatGPT Image Sep 27, 2026, 07_12_47 PM" src="https://github.com/user-attachments/assets/c4e2149b-211a-4941-a057-77ce1cdf02eb" />
+![Autonomous Data Analysis Agent Architecture](image/Autonomous%20Data%20Analysis%20Agent%20Architecture.png)
+
 
 
 
